@@ -1,0 +1,74 @@
+ <!DOCTYPE html>
+<html ng-app="app">
+ <head>
+   <meta charset="utf-8">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+
+   <script src="index.js"></script>
+ </head>
+
+<body>
+
+<div class="container" ng-controller="indexController">
+  <p></p>
+
+
+<h5>Products</h5>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Title</th>
+      <th scope="col">Price</th>
+      <th scope="col">Actions</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="p in products">
+      <td>{{p.id}}</td>
+      <td>{{p.title}}</td>
+      <td>{{p.price}}</td>
+      <td>
+        <button type="button" class="btn btn-primary" ng-click="addProductToCart(p.id)">Add</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+
+  <h5>Cart</h5>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Product ID</th>
+      <th scope="col">Title</th>
+      <th scope="col">Price</th>
+      <th scope="col">Actions</th>
+      <th scope="col">Actions</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="p in cart.cartList">
+      <td>{{p.id}}</td>
+      <td>{{p.title}}</td>
+      <td>{{p.price}}</td>
+      <td>
+        <button type="button" class="btn btn" ng-click="deleteProductFromCart(p.id)">-</button>
+      </td>
+    </tr>
+    <tr style="font-weight: bold">
+      <td>Total Price</td>
+      <td></td>
+      <td>{{cart.sum + 'euro'}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-danger" ng-click="clearCart()">clear cart</button>
+</div>
+
+
+
+</body>
+</html>
