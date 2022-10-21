@@ -17,6 +17,16 @@ INSERT INTO products (title, price) VALUES
 ('Jeans', 78.66),
 ('Sweater',100.00);
 
+create table order_items (
+    id                              bigserial primary key,
+    product_id                      bigint references products (id),
+    quantity                        int,
+    price_per_product               numeric (8, 2),
+    price                           numeric (8, 2),
+    created_at                      timestamp default current_timestamp,
+    updated_at                      timestamp default current_timestamp
+);
+
 create table users (
     id                      bigserial primary key,
     username                varchar(30) not null unique,

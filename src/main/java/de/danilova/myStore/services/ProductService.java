@@ -1,6 +1,7 @@
 package de.danilova.myStore.services;
 
 import de.danilova.myStore.entities.Product;
+import de.danilova.myStore.exceptions.ResourceNotFoundException;
 import de.danilova.myStore.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
