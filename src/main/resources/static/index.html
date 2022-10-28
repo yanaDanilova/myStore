@@ -43,19 +43,27 @@
   <table class="table">
     <thead>
     <tr>
+      <th scope="col">OrderItems ID</th>
       <th scope="col">Product ID</th>
       <th scope="col">Title</th>
-      <th scope="col">Price</th>
-      <th scope="col">Actions</th>
-      <th scope="col">Actions</th>
+      <th scope="col">Price pro Product</th>
+      <th scope="col">Quantity</th>
+      <th scope="col"> Price</th>
     </thead>
     <tbody>
-    <tr ng-repeat="p in cart.cartList">
-      <td>{{p.id}}</td>
-      <td>{{p.title}}</td>
-      <td>{{p.price}}</td>
+    <tr ng-repeat="oi in cart.cartList">
+      <td>{{oi.orderItemsId}}</td>
+      <td>{{oi.productId}}</td>
+      <td>{{oi.productTitle}}</td>
+      <td>{{oi.pricePerProduct}}</td>
       <td>
-        <button type="button" class="btn btn" ng-click="deleteProductFromCart(p.id)">-</button>
+        <button type="button" class="btn btn" ng-click="deleteProductFromCart(oi.productId)">-</button>
+        {{oi.quantity}}
+        <button type="button" class="btn btn" ng-click="addProductToCart(oi.productId)">+</button>
+      </td>
+      <td>{{oi.price}}</td>
+      <td>
+        <button type="button" class="btn btn-danger" ng-click="deleteProductFromCart(oi.productId)">Delete</button>
       </td>
     </tr>
     <tr style="font-weight: bold">
@@ -67,8 +75,6 @@
   </table>
   <button type="button" class="btn btn-danger" ng-click="clearCart()">clear cart</button>
 </div>
-
-
 
 </body>
 </html>

@@ -1,11 +1,12 @@
 package de.danilova.myStore.controllers;
 
+import de.danilova.myStore.dtos.CartDto;
 import de.danilova.myStore.utils.Cart;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/carts")
 public class CartController {
@@ -13,11 +14,11 @@ public class CartController {
     private final Cart cart;
 
     @GetMapping
-    public Cart getCart(){
-        return cart;
+    public CartDto getCart(){
+        return new CartDto(cart);
     }
 
-    @DeleteMapping()
+    @GetMapping("/delete")
     public void deleteProductFromCartById(@RequestParam Long id){
         cart.deleteProductFromCart(id);
     }
@@ -27,8 +28,8 @@ public class CartController {
         cart.clearCart();
     }
 
-    @GetMapping("{id}")
-    public void addProductToCart(@PathVariable Long id){
-        cart.deleteProductFromCart(id);
+    @GetMapping("/add")
+    public void addProductToCart(@RequestParam Long id){
+        cart.addProduct(id);
     }
 }
