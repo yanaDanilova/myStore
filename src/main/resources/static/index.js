@@ -1,8 +1,38 @@
-angular.module('app',[]).controller('indexController',function($scope, $http, $location){
+angular.module('app',['ngStorage']).controller('indexController',function($scope, $http, $location, $localStorage){
 
 const contextPath = 'http://localhost:8090/store';
 
+ $scope.tryToAuth = function () {
+         $http.post(contextPath + '/api/v1/auth', $scope.user)
+             .then(function successCallback(response) {
+                 if (response.data.token) {
+                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                     $localStorage.myStoreCurrentUser = {username: $scope.user.username, token: response.data.token};
 
+                     $scope.user.username = null;
+                     $scope.user.password = null;
+                 }
+             }, function errorCallback(response) {
+             });
+     };
+
+ $scope.tryToLogout = function () {
+         $scope.clearUser();
+     };
+
+     $scope.clearUser = function () {
+         delete $localStorage.myStoreCurrentUser;
+         $http.defaults.headers.common.Authorization = '';
+     };
+
+
+$scope.isUserLoggedIn = function () {
+         if ($localStorage.myStoreCurrentUser) {
+             return true;
+         } else {
+             return false;
+         }
+     };
 
 
 
@@ -56,11 +86,20 @@ $scope.loadPage = function () {
                 $scope.loadCart();
                 })
    }
+    $scope.createOrder = function(){
+  $http.post(contextPath + "/api/v1/orders")
+        .then (function (response){
+                 alert(response.HttpStatus)
+                  })
+     }
 
 
 
-
-    $scope.loadPage();
+     if ($localStorage.myStoreCurrentUser) {
+                $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.myStoreCurrentUser.token;
+            }
+    $scope.loadPage(1);
+    $scope.loadCart();
 
 
 

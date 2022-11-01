@@ -3,6 +3,7 @@ package de.danilova.myStore.controllers;
 import de.danilova.myStore.dtos.JwtRequest;
 import de.danilova.myStore.dtos.JwtResponse;
 
+import de.danilova.myStore.exceptions.StoreError;
 import de.danilova.myStore.services.UserService;
 import de.danilova.myStore.utils.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
@@ -25,17 +26,15 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/auth")
+    @PostMapping()
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException ex) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new StoreError(HttpStatus.UNAUTHORIZED.value(), "Incorrect username or password"), HttpStatus.UNAUTHORIZED);
         }
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
-
-
 }
