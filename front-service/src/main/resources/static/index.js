@@ -1,10 +1,10 @@
 angular.module('app',['ngStorage']).controller('indexController',function($scope, $http, $location, $localStorage){
 
-const contextPathCore = 'http://localhost:8090/store';
-const contextPathCart = 'http://localhost:8190/store-carts';
+const contextPathCore = 'http://localhost:5555/core';
+const contextPathCart = 'http://localhost:5555/cart';
 
  $scope.tryToAuth = function () {
-         $http.post(contextPathCore + '/api/v1/auth', $scope.user)
+         $http.post( 'http://localhost:5555/auth/api/v1/auth', $scope.user)
              .then(function successCallback(response) {
                  if (response.data.token) {
                      $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
@@ -38,7 +38,7 @@ $scope.isUserLoggedIn = function () {
 
 
 $scope.loadPage = function () {
-        $http.get(contextPathCore + "/api/v1/products")
+        $http.get(contextPathCore + '/api/v1/products')
         .then(function (response) {
             $scope.products = response.data;
         });
@@ -98,6 +98,7 @@ $scope.loadPage = function () {
 
      if ($localStorage.myStoreCurrentUser) {
                 $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.myStoreCurrentUser.token;
+
             }
     $scope.loadPage(1);
     $scope.loadCart();

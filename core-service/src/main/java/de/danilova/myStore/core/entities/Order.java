@@ -25,9 +25,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+
+    @Column(name = "username")
+    private String username;
 
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
@@ -48,8 +48,8 @@ public class Order {
     private LocalDateTime updatedAt;
 
 
-    public Order(User user, List<OrderItems> orderItemsList, BigDecimal totalPrice) {
-        this.user = user;
+    public Order(String username, List<OrderItems> orderItemsList, BigDecimal totalPrice) {
+        this.username = username;
         this.orderItemsList = orderItemsList;
         this.totalPrice = totalPrice;
     }

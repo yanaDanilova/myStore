@@ -1,8 +1,8 @@
-package de.danilova.myStore.core.services;
+package de.danilova.myStore.auth.services;
 
-import de.danilova.myStore.core.repositories.UserRepository;
-import de.danilova.myStore.core.entities.Role;
-import de.danilova.myStore.core.entities.User;
+import de.danilova.myStore.auth.entities.Role;
+import de.danilova.myStore.auth.entities.User;
+import de.danilova.myStore.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

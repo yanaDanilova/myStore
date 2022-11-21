@@ -1,6 +1,6 @@
-package de.danilova.myStore.core.repositories;
+package de.danilova.myStore.auth.repository;
 
-import de.danilova.myStore.core.entities.User;
+import de.danilova.myStore.auth.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

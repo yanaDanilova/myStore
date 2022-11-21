@@ -1,4 +1,4 @@
-package de.danilova.myStore.core.utils;
+package de.danilova.myStore.auth.utils;
 
 
 import io.jsonwebtoken.Claims;

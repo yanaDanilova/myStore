@@ -29,7 +29,7 @@ public class CartService {
     }
 
     public void addToCart(Long productId){
-       ProductDto productDto = productServiceIntegration.getProductById(productId).orElseThrow(() -> new ResourceNotFoundException("Продукт с id: " + productId + " не найден"));
+       ProductDto productDto = productServiceIntegration.getProductById(productId);
         cart.addProduct(productDto);
     }
     public void clear(){

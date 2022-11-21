@@ -1,17 +1,22 @@
 package de.danilova.myStore.core.integrations;
 
 import de.danilova.myStore.api.CartDto;
-import de.danilova.myStore.cart.models.Cart;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+
 @Component
 @RequiredArgsConstructor
 public class CartServiceIntegration {
 
-    private  final RestTemplate restTemplate;
+    private  final WebClient cartServiceWebClient;
 
     public CartDto getCurrentCartDto(){
-       return restTemplate.getForObject("http://localhost:8190/store-carts/api/v1/carts", CartDto.class);
+       return cartServiceWebClient.get().uri("/api/v1/carts").retrieve().bodyToMono(CartDto.class).block();
+    }
+
+    public void clear(){
+        cartServiceWebClient.get().uri("/api/v1/carts/clear").retrieve().toBodilessEntity().block();
     }
 }
