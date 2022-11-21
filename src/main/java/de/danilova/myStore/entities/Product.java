@@ -28,6 +28,9 @@ public class Product {
     private BigDecimal price;
 
 
+    @ManyToOne
+    @JoinColumn(name = "categories_id")
+    private Category category;
 
     @Column(name = "created_at")
     @CreationTimestamp

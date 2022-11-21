@@ -23,6 +23,10 @@ public class OrderItems {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
     @Column(name= "quantity")
     private int quantity;
 
@@ -31,6 +35,7 @@ public class OrderItems {
 
     @Column(name = "price")
     private BigDecimal price;
+
 
     @Column(name = "created_at")
     @CreationTimestamp
