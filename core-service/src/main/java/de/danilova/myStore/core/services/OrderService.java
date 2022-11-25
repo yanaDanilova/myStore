@@ -22,7 +22,7 @@ public class OrderService {
    private final OrderRepository orderRepository;
 
    @Transactional
-    public void createOrder(String username){
+    public Order createOrder(String username){
         CartDto cartDto = cartServiceIntegration.getCurrentCartDto();
        Order order = new Order();
        order.setUsername(username);
@@ -35,5 +35,6 @@ public class OrderService {
         orderRepository.save(order);
 
         cartServiceIntegration.clear();
+        return order;
     }
 }
