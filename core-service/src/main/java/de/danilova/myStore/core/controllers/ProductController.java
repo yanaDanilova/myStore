@@ -8,8 +8,11 @@ import de.danilova.myStore.core.entities.Product;
 
 import de.danilova.myStore.core.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,10 +25,19 @@ public class ProductController {
     private final ProductConverter productConverter;
 
     @GetMapping
-    public List<ProductDto> getAllProducts(){
-        List <Product> productList = productService.getAllProducts();
-        return productList.stream().map(productConverter::entityToDto).collect(Collectors.toList());
-    }
+    public Page<ProductDto> getProducts(
+            @RequestParam(defaultValue = "1",name = "page")int pageIndex,
+            @RequestParam(required = false,name = "minPrice")BigDecimal minPrice,
+            @RequestParam(required = false,name = "maxPrice")BigDecimal maxPrice,
+            @RequestParam(required = false,name = "title_part")String title
+    ){
+
+        if(pageIndex < 1 ){
+            pageIndex=1;
+        }
+        Page<Product> productPage = productService.getProducts(minPrice, maxPrice, title, pageIndex);
+        return new PageImpl<>(productPage.stream().map(productConverter::entityToDto).collect(Collectors.toList()),productPage.getPageable(),productPage.getTotalElements());
+   }
 
     @GetMapping("{id}")
     public ProductDto getProductById(@PathVariable Long id){

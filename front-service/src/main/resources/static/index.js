@@ -37,12 +37,36 @@ $scope.isUserLoggedIn = function () {
 
 
 
-$scope.loadPage = function () {
-        $http.get(contextPathCore + '/api/v1/products')
-        .then(function (response) {
-            $scope.products = response.data;
+
+$scope.loadPage = function (page) {
+        $http({
+            url: contextPathCore + '/api/v1/products',
+            method: 'GET',
+            params: {
+                p: page,
+                title_part: $scope.filter ? $scope.filter.title_part : null,
+                min_price: $scope.filter ? $scope.filter.min_price : null,
+                max_price: $scope.filter ? $scope.filter.max_price : null
+            }
+        }).then(function (response) {
+            $scope.productsPage = response.data;
+
+            let minPageIndex = page - 2;
+            if (minPageIndex < 1) {
+                minPageIndex = 1;
+            }
+
+            let maxPageIndex = page + 2;
+            if (maxPageIndex > $scope.productsPage.totalPages) {
+                maxPageIndex = $scope.productsPage.totalPages;
+            }
+
+            $scope.paginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
+
+            console.log("PAGE FROM BACKEND")
+            console.log($scope.productsPage);
         });
-        };
+    };
 
   $scope.addProductToCart = function(id){
      $http({
