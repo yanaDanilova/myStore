@@ -10,7 +10,13 @@ angular.module('myStoreApp').controller('cartController', function ($scope, $htt
     };
 
     $scope.createOrder = function () {
-        $http.post('http://localhost:5555/core/api/v1/orders')
+        $http({
+                 url:'http://localhost:5555/core/api/v1/orders/create',
+                 method: 'post',
+                 headers: {
+                        'username' : $localStorage.myStoreCurrentUser.username
+                                             }
+                   })
             .then(function (response) {
                 $scope.loadCart();
             });

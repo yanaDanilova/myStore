@@ -51,6 +51,8 @@ angular.module('myStoreApp').controller('indexController', function ($rootScope,
                  .then(function successCallback(response) {
                      if (response.data.token) {
                          $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+
+
                          $localStorage.myStoreCurrentUser = {username: $scope.user.username, token: response.data.token};
 
                          $scope.user.username = null;
