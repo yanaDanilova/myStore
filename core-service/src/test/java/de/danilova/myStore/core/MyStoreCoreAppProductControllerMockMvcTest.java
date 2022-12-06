@@ -5,25 +5,27 @@ import de.danilova.myStore.core.entities.Category;
 import de.danilova.myStore.core.entities.Product;
 import de.danilova.myStore.core.services.ProductService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+
 import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
 @SpringBootTest
 @AutoConfigureMockMvc
-//в чем разницу между аннотацией WebMvcTest и @AutoConfigureMock (на уроке здесь ставили одну, а в методичке другая)
 public class MyStoreCoreAppProductControllerMockMvcTest {
 
     @Autowired
@@ -36,7 +38,7 @@ public class MyStoreCoreAppProductControllerMockMvcTest {
     private ProductConverter productConverter;
 
     @Test
-    public void getProductById(){
+    public void getProductById() throws Exception {
         Category category = new Category();
         category.setId(3244L);
         category.setTitle("Clothes");
@@ -56,9 +58,8 @@ public class MyStoreCoreAppProductControllerMockMvcTest {
         productDto.setTitle(product.getTitle());
 
         given(productConverter.entityToDto(product)).willReturn(productDto);
+        mvc.perform(get("/api/v1/products/123")).andDo(print()).andExpect((jsonPath("$.title")).value("T-Shirt"));
 
-       // mvc.perform(get("/api/v1/products?id=123L").contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(jsonPath("$.title").is(productDto.getTitle()));
-        //не понимаю, почему горит красным get / is . Я что-то не импортировала?
 
 
 
