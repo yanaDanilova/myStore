@@ -8,8 +8,8 @@ spring:
     gateway:
       globalcors:
         corsConfigurations:
-          '[/*]':
-            allowedOrigins: "http://localhost:8189"
+          '[/**]':
+            allowedOrigins: "*"
             allowedMethods:
               - GET
               - POST

@@ -35,7 +35,13 @@ $scope.isUserLoggedIn = function () {
          }
      };
 
-
+ $scope.generatePagesIndexes = function (startPage, endPage) {
+         let arr = [];
+         for (let i = startPage; i < endPage + 1; i++) {
+             arr.push(i);
+         }
+         return arr;
+     };
 
 
 $scope.loadPage = function (page) {
@@ -67,6 +73,7 @@ $scope.loadPage = function (page) {
             console.log($scope.productsPage);
         });
     };
+
 
   $scope.addProductToCart = function(id){
      $http({
