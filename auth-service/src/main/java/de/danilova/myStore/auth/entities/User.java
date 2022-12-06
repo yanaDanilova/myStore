@@ -11,13 +11,12 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
-@Table(name = "users")
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "username")
@@ -28,9 +27,6 @@ public class User {
 
     @Column(name = "email")
     private String email;
-
-
-
 
     @ManyToMany
     @JoinTable(name = "users_roles",
@@ -45,6 +41,4 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-
 }
