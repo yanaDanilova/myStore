@@ -41,6 +41,13 @@
             } catch (e) {
             }
         }
+
+        if(!$localStorage.myStoreGuestCartId){
+          $http.get('http://localhost:5555/cart/api/v1/carts/generate_uuid')
+            .then(function successCallback(response){
+                $localStorage.myStoreGuestCartId = response.data.value;
+            });
+        }
     }
 })();
 
@@ -64,6 +71,8 @@ angular.module('myStoreApp').controller('indexController', function ($rootScope,
 
          $scope.tryToLogout = function () {
              $scope.clearUser();
+
+
          };
 
          $scope.clearUser = function () {

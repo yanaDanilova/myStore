@@ -17,9 +17,14 @@ public class OrderController {
     private final OrderService orderService;
 
 
+    @GetMapping
+    public int showOrders(){
+       return 1;
+    }
+
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createOrder(@RequestHeader(name="username") String username){ // @RequestBody  OrderData
+    public void createOrder(@RequestHeader String username){ // @RequestBody  OrderData
         orderService.createOrder(username);
     }
 
