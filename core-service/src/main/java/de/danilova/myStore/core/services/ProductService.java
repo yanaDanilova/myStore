@@ -25,20 +25,21 @@ public class ProductService {
 
     private final CategoryService categoryService;
 
-    public Page<Product> getProducts(BigDecimal minPrice, BigDecimal maxPrice, String title, int pageIndex){
-        Specification<Product> specification= Specification.where(null);
+    public Page<Product> getProducts(BigDecimal minPrice, BigDecimal maxPrice, String titlePart, Integer pageIndex){
+        Specification<Product> specification = Specification.where(null);
         if(minPrice != null){
-            specification= specification.and(ProductSpecification.priceGreaterOrEqualsThen(minPrice));
+            specification = specification.and(ProductSpecification.priceGreaterOrEqualsThen(minPrice));
         }
-        if(maxPrice != null){
-            specification = specification.and(ProductSpecification.priceLessOrEqualsThan(maxPrice));
+        if(maxPrice!=null){
+            specification = specification.and(ProductSpecification.priceLesserOrEqualsThen(maxPrice));
         }
-        if(title !=null){
-            specification = specification.and(ProductSpecification.titleLike(title));
+        if(titlePart!=null){
+            specification =  specification.and(ProductSpecification.titleLike(titlePart));
         }
 
-       return productRepository.findAll(specification, PageRequest.of(pageIndex-1,5));
+        return productRepository.findAll(specification, PageRequest.of(pageIndex-1,5));
     }
+
 
     public Optional<Product> getProductById(Long id){
         return productRepository.findById(id);

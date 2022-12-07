@@ -26,17 +26,17 @@ public class ProductController {
 
     @GetMapping
     public Page<ProductDto> getProducts(
-            @RequestParam(defaultValue = "1",name = "page")int pageIndex,
-            @RequestParam(required = false,name = "minPrice")BigDecimal minPrice,
-            @RequestParam(required = false,name = "maxPrice")BigDecimal maxPrice,
-            @RequestParam(required = false,name = "title_part")String title
-    ){
+            @RequestParam(name="p", defaultValue = "1") int pageIndex,
+            @RequestParam(name = "title_part",required = false) String titlePart,
+            @RequestParam(name = "min_price",required = false) BigDecimal minPrice,
+            @RequestParam(name = "max_price", required = false) BigDecimal maxPrice
 
-        if(pageIndex < 1 ){
-            pageIndex=1;
+    ) {
+        if(pageIndex<1){
+            pageIndex = 1;
         }
-        Page<Product> productPage = productService.getProducts(minPrice, maxPrice, title, pageIndex);
-        return new PageImpl<>(productPage.stream().map(productConverter::entityToDto).collect(Collectors.toList()),productPage.getPageable(),productPage.getTotalElements());
+        Page<Product> productPage = productService.getProducts(minPrice,maxPrice,titlePart,pageIndex);
+        return new PageImpl<>(productPage.getContent().stream().map(productConverter::entityToDto).collect(Collectors.toList()),productPage.getPageable(),productPage.getTotalElements());
    }
 
     @GetMapping("{id}")

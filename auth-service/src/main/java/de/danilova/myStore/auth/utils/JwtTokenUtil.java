@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenUtil {
 
-    @Value("fgkdsjgksdjgkgj.gerhrehh.3532.sdfrestewat32.dgdf56yhf")
+    @Value("${jwt.secret}")
     private String secret;
 
     public String generateToken(UserDetails userDetails) {

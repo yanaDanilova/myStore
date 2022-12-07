@@ -35,8 +35,8 @@ public class CartController {
         cartService.clear();
     }
 
-    @GetMapping("/add")
-    public void addProductToCart(@RequestParam Long id){
+    @GetMapping("/add/{id}")
+    public void addProductToCart(@PathVariable Long id){
         cartService.addToCart(id);
     }
 }

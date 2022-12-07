@@ -1,0 +1,39 @@
+<div/>
+  <p></p>
+  <h5>Cart</h5>
+  <p></p>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">OrderItems ID</th>
+      <th scope="col">Product ID</th>
+      <th scope="col">Title</th>
+      <th scope="col">Price pro Product</th>
+      <th scope="col">Quantity</th>
+      <th scope="col"> Price</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="ci in cart.cartItemsList">
+      <td>{{ci.productId}}</td>
+      <td>{{ci.productTitle}}</td>
+      <td>{{ci.pricePerProduct}}</td>
+      <td>
+        <button type="button" class="btn btn" ng-click="deleteProductFromCart(ci.productId)">-</button>
+        {{ci.quantity}}
+        <button type="button" class="btn btn" ng-click="addProductToCart(ci.productId)">+</button>
+      </td>
+      <td>{{ci.price}}</td>
+      <td>
+        <button type="button" class="btn btn-danger" ng-click="deleteProductFromCart(ci.productId)">Delete</button>
+      </td>
+    </tr>
+    <tr style="font-weight: bold">
+      <td>Total Price</td>
+      <td></td>
+      <td>{{cart.sum + 'euro'}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <button type="button" class="btn btn" ng-click="createOrder()"> create order</button>
+  <button type="button" class="btn btn-danger" ng-click="clearCart()">clear cart</button>
+</div>

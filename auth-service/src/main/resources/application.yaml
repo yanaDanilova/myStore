@@ -2,10 +2,14 @@ server:
   port: 8187
   servlet:
     context-path: /store-auth
+
+
 spring:
+  flyway:
+    location: classpath:/db/migration
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:market-auth;MODE=PostgreSQL
+    url: jdbc:h2:mem:store-auth;MODE=PostgreSQL
     username: sa
     password:
   jpa:
