@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,5 +37,9 @@ public class OrderService {
 
         cartServiceIntegration.clear(username);
         return order;
+    }
+
+    public List<Order> findByUsername(String username){
+       return orderRepository.findByUsername(username);
     }
 }

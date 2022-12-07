@@ -22,6 +22,10 @@
                 templateUrl: 'orders/orders.html',
                 controller: 'ordersController'
             })
+            .when('/registration', {
+                            templateUrl: 'registration/registration.html',
+                            controller: 'registrationController'
+                        })
             .otherwise({
                 redirectTo: '/'
             });
@@ -69,7 +73,7 @@ angular.module('myStoreApp').controller('indexController', function ($rootScope,
                  });
          };
 
-         $scope.tryToLogout = function () {
+         $rootScope.tryToLogout = function () {
              $scope.clearUser();
 
 
@@ -80,7 +84,7 @@ angular.module('myStoreApp').controller('indexController', function ($rootScope,
              $http.defaults.headers.common.Authorization = '';
          };
 
-         $scope.isUserLoggedIn = function () {
+         $rootScope.isUserLoggedIn = function () {
              if ($localStorage.myStoreCurrentUser) {
                  return true;
              } else {
