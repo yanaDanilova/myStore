@@ -1,11 +1,16 @@
 package de.danilova.myStore.api;
 
-import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.List;
+@Schema(description = "Category's model")
 public class CategoryDto {
 
+    @Schema(description = "Category's identifier", required = true, example = "1")
     private Long id;
+    @Schema(description = "Category's name", required = true, example = "Clothes")
     private String title;
+    @Schema(description = "List of product this category", required = true)
     private List<ProductDto> products;
 
     public Long getId() {
