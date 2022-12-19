@@ -1,4 +1,4 @@
-angular.module('myStoreApp').controller('registrationController', function ($scope, $http, $location) {
+angular.module('myStoreApp').controller('registrationController', function ($scope, $http, $location,$localStorage) {
 
     const contextPathAuth = 'http://localhost:5555/auth';
 
