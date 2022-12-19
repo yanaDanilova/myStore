@@ -52,7 +52,7 @@ public class MyStoreCoreAppOrderServiceMockTest {
         cartDto.setCartItemsList(cartItemDtoList);
         cartDto.setSum(BigDecimal.valueOf(59.99));
 
-        Mockito.doReturn(cartDto).when(cartServiceIntegration).getCurrentCartDto();
+        Mockito.doReturn(cartDto).when(cartServiceIntegration).getCurrentCartDto(null);
 
         Category category = new Category();
         category.setId(234L);

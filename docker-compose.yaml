@@ -1,0 +1,81 @@
+version: '3'
+
+services:
+
+  postgres1:
+    image: postgres:9.6
+    domainname: postgres1
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=CORE
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-U", "postgres"]
+      interval: 5s
+      timeout: 1s
+      retries: 2
+
+  postgres2:
+    image: postgres:9.6
+    domainname: postgres2
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_DB=AUTH
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-U", "postgres" ]
+      interval: 5s
+      timeout: 1s
+      retries: 2
+
+  postgres3:
+    image: postgres:9.6
+    domainname: postgres3
+    ports:
+      - "5435:5432"
+    environment:
+      - POSTGRES_DB=CORETEST
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-U", "postgres" ]
+      interval: 5s
+      timeout: 1s
+      retries: 2
+
+
+  flyway1:
+    image: boxfuse/flyway
+    command: -url=jdbc:postgresql://postgres1:5432/CORE -schemas=public -user=postgres -password=postgres -connectRetries=30 migrate
+    volumes:
+      - ./flyway/core:/flyway/sql
+    depends_on:
+      - postgres1
+
+  flyway2:
+    image: boxfuse/flyway
+    command: -url=jdbc:postgresql://postgres2:5432/AUTH   -schemas=public -user=postgres -password=postgres -connectRetries=30 migrate
+    volumes:
+      - ./flyway/auth:/flyway/sql
+    depends_on:
+      - postgres2
+
+  flyway3:
+    image: boxfuse/flyway
+    command: -url=jdbc:postgresql://postgres3:5432/CORETEST -schemas=public -user=postgres -password=postgres -connectRetries=30 migrate
+    volumes:
+      - ./flyway/test:/flyway/sql
+    depends_on:
+      - postgres3
+
+
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6379:6379"

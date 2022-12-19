@@ -17,7 +17,7 @@ public class Cart {
     }
 
     public List<CartItems> getCartItemsList(){
-        return Collections.unmodifiableList(cartItemsList);
+        return cartItemsList;
     }
 
     public void addProduct(ProductDto p){

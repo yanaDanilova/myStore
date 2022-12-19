@@ -22,6 +22,10 @@
                 templateUrl: 'orders/orders.html',
                 controller: 'ordersController'
             })
+            .when('/registration', {
+                            templateUrl: 'registration/registration.html',
+                            controller: 'registrationController'
+                        })
             .otherwise({
                 redirectTo: '/'
             });
@@ -40,6 +44,13 @@
                 }
             } catch (e) {
             }
+        }
+
+        if(!$localStorage.myStoreGuestCartId){
+          $http.get('http://localhost:5555/cart/api/v1/carts/generate_uuid')
+            .then(function successCallback(response){
+                $localStorage.myStoreGuestCartId = response.data.value;
+            });
         }
     }
 })();
@@ -62,8 +73,10 @@ angular.module('myStoreApp').controller('indexController', function ($rootScope,
                  });
          };
 
-         $scope.tryToLogout = function () {
+         $rootScope.tryToLogout = function () {
              $scope.clearUser();
+
+
          };
 
          $scope.clearUser = function () {
@@ -71,7 +84,7 @@ angular.module('myStoreApp').controller('indexController', function ($rootScope,
              $http.defaults.headers.common.Authorization = '';
          };
 
-         $scope.isUserLoggedIn = function () {
+         $rootScope.isUserLoggedIn = function () {
              if ($localStorage.myStoreCurrentUser) {
                  return true;
              } else {

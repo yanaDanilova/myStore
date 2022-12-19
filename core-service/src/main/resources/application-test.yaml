@@ -1,11 +1,9 @@
 spring:
-  flyway:
-    location: classpath:/db/testdata
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:mydatabase;MODE=PostgreSQL
-    username: sa
-    password:
+    driver-class-name: postgres3
+    url: localhost:5435
+    username: postgres
+    password: postgres
 jpa:
   show-sql: true
   properties:

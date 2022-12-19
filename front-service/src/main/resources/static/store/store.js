@@ -15,6 +15,7 @@ angular.module('myStoreApp').controller('storeController', function ($scope, $ht
                     max_price: $scope.filter ? $scope.filter.max_price : null
                 }
             }).then(function (response) {
+
                 $scope.productsPage = response.data;
 
                 let minPageIndex = page - 2;
@@ -45,11 +46,18 @@ angular.module('myStoreApp').controller('storeController', function ($scope, $ht
         };
 
     $scope.addProductToCart = function (id) {
-        $http.get(contextPathCart + '/api/v1/carts/add/'+ id)
+        $http.get(contextPathCart + '/api/v1/carts/' + $localStorage.myStoreGuestCartId+ '/add/'+ id)
             .then(function (response) {
+            $scope.loadCart();
             });
     }
 
+        $scope.loadCart = function () {
+            $http.get(contextPathCart + '/api/v1/carts/' + $localStorage.myStoreGuestCartId)
+                .then(function (response) {
+                    $scope.cart = response.data;
+                });
+        };
 
 
     $scope.loadPage();
